@@ -1,0 +1,75 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.log
+
+# --- Virtual Environments ---
+venv/
+env/
+ENV/
+.venv/
+.env/
+pip-wheel-metadata/
+*.sqlite3
+
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+
+# --- Windows ---
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- IDEs and Editors ---
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints
+
+# --- Test and Coverage Tools ---
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+
+# --- MyPy and Pylint ---
+.mypy_cache/
+.pyre/
+.pytype/
+
+# --- dotenv files ---
+.env
+.env.*
+
+# --- Temporary Files ---
+*.bak
+*.tmp
+*.swp
+*~
+
+# --- Git ---
+.git/
+
+# --- Hackathon-specific ---
+# (if you're downloading data/models or uploading output)
+data/
+models/
+output/
+uploads/
