@@ -13,3 +13,4 @@ Inbox Buddy helps you:
 ## Why Use It?
 
 Whether you're overwhelmed with emails or just want to save time, Inbox Buddy ensures you never miss the point — and always respond the right way.
+ 
