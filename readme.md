@@ -55,7 +55,7 @@ OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxx
 ```bash
 python app.py
 ```
-```markdown
+
 ---
 
 ## 📄 Project Proposal
