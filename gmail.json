@@ -1,0 +1,200 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=1.Summarize the email into a few bullet points.\n2. Using MCP fetch, using the markdown result content from https://themidult.com/email-translations/ using MCP fetch and respond to the request for help with Python using a tone that expresses frustration but remains professional, keeping in line with the tone of The Midult’s “email translations” (sarcastic but not outright rude).",
+        "options": {
+          "systemMessage": "=Reply should reflect a tone from {{ $json.From }}’s \"email translations\" style, sarcastic but not inappropriate for workplace communication. Express your frustration with the lack of effort in Googling or seeking basic knowledge on {{ $json.Subject }} but keep the response professional and not offensive in json format contain Response with palceholder for both name, Subject."
+        }
+      },
+      "id": "85fda04b-749f-4f73-a105-f2204ddd140e",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1540,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 👋 Welcome to n8n!\nThis example shows how to build an AI Agent that interacts with your \ncalendar.\n\n### 1. Connect your accounts\n- Claim your `free` 0 OpenAI calls in the `OpenAI model` node \n- Connect your Google account in the `Google Calendar` node credentials section\n\n### 2. Ready to test it?\nClick Chat below and start asking questions! For example you can try `What meetings do I have today?`",
+        "height": 389,
+        "width": 319,
+        "color": 6
+      },
+      "id": "bad5c0e2-fa64-4bb8-8af6-426a3a87b9ed",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        700,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "668bfd04-8757-4ade-8ad2-22242bf56b75",
+      "name": "OpenAI Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        440
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "ypufMNrW86yZs5Iv",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "### Want to learn more?\nWant to learn more about AI and how to apply it best in n8n? Have a look at our [new tutorial series on YouTube](https://www.youtube.com/watch?v=yzvLfHb0nqE&lc).",
+        "height": 100,
+        "width": 317,
+        "color": 6
+      },
+      "id": "08b8c237-6923-4a2c-8cb5-56a9cb44ec11",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        700,
+        560
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {}
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        1260,
+        260
+      ],
+      "id": "97288540-5431-4d7d-806b-19153a396cc6",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "wpG3qjRMo3FpV76c",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "williamoreo472@gmail.com",
+        "subject": "={{ $json.output.replaceAll(\"```\",\"\").replaceAll(\"json\",\"\").parseJson().Response.Subject }}",
+        "message": "={{ $json.output.replaceAll(\"```\",\"\").replaceAll(\"json\",\"\").parseJson().Response.Body }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2140,
+        240
+      ],
+      "id": "3f837caa-eada-4da9-b6e6-50490de52903",
+      "name": "Gmail",
+      "webhookId": "d2e39963-bdc9-4e8e-b5ec-1ee05a2b3bef",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "wpG3qjRMo3FpV76c",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "http://localhost:8080/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        1660,
+        680
+      ],
+      "id": "bb2ffd05-00d0-45d4-884e-8abe63607fb5",
+      "name": "MCP Client"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "binaryPropertyName": "=data {{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1860,
+        520
+      ],
+      "id": "a2a61ff7-cbfc-473f-9f04-811bb8a4fbd4",
+      "name": "Extract from File"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenAI Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MCP Client": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2ad20835-61c0-43cb-91dc-e375d720d9e9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1c141d596687536ad32d2e8992386b5d63e2ee6ec8d6645e8687047f3f7bee11"
+  },
+  "id": "gwte7wLzj7L6f5VM",
+  "tags": []
+}
